@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:meals/providers/favorites_provider.dart';
 import 'package:meals/providers/filter_provider.dart';
+
 import 'package:meals/screens/categories.dart';
 import 'package:meals/screens/filters.dart';
 import 'package:meals/screens/meals.dart';
 import 'package:meals/widgets/main_drawer.dart';
+import 'package:meals/providers/favorites_provider.dart';
 
 const kInitialFilters = {
   Filter.glutenFree: false,
@@ -25,6 +26,7 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
+
   void _selectPage(int index) {
     setState(() {
       _selectedPageIndex = index;
@@ -34,7 +36,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
   void _setScreen(String identifier) async {
     Navigator.of(context).pop();
     if (identifier == 'filters') {
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(
+      await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
           builder: (ctx) => const FiltersScreen(),
         ),
@@ -44,19 +46,19 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final availbleMeals = ref.watch(filteredMealsProvider);
+    final availableMeals = ref.watch(filteredMealsProvider);
 
     Widget activePage = CategoriesScreen(
-      avaiableMeals: availbleMeals,
+      availableMeals: availableMeals,
     );
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      final favoriteMeals = ref.watch(favoritMealsProvider);
+      final favoriteMeals = ref.watch(favoriteMealsProvider);
       activePage = MealsScreen(
         meals: favoriteMeals,
       );
-      activePageTitle = 'Favorites';
+      activePageTitle = 'Your Favorites';
     }
 
     return Scaffold(

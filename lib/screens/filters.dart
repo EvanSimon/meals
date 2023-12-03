@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meals/providers/filter_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meals/providers/filter_provider.dart';
 
 // import 'package:meals/screens/tabs.dart';
 // import 'package:meals/widgets/main_drawer.dart';
@@ -11,6 +11,7 @@ class FiltersScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeFilters = ref.watch(filtersProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Filters'),
